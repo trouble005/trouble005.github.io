@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>運動APP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        .card {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .card input,
+        .card select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .card button {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .card button:hover {
+            background-color: #34495e;
+        }
+        .log-list {
+            list-style: none;
+            padding: 0;
+        }
+        .log-list li {
+            padding: 10px;
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .total-calories {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>運動APP</h1>
+</header>
+
+<div class="container">
+
+    <!-- 選擇運動項目 -->
+    <div class="card">
+        <h2>選擇運動</h2>
+        <label for="exercise-type">運動類型:</label>
+        <select id="exercise-type">
+            <option value="跑步">跑步</option>
+            <option value="游泳">游泳</option>
+            <option value="騎車">騎車</option>
+            <option value="瑜伽">瑜伽</option>
+        </select>
+
+        <label for="duration">運動時長 (分鐘):</label>
+        <input type="number" id="duration" placeholder="輸入運動時長">
+
+        <label for="calories-burned">燃燒熱量 (大卡):</label>
+        <input type="number" id="calories-burned" placeholder="輸入燃燒的熱量">
+
+        <button onclick="logExercise()">記錄運動</button>
+    </div>
+
+    <!-- 顯示運動總消耗熱量 -->
+    <div class="card total-calories" id="total-calories">
+        總共燃燒熱量: 0 大卡
+    </div>
+
+    <!-- 運動日誌 -->
+    <div class="card">
+        <h2>運動日誌</h2>
+        <ul id="exercise-log" class="log-list"></ul>
+    </div>
+
+</div>
+
+<script>
+    let totalCalories = 0;
+
+    function logExercise() {
+        const exerciseType = document.getElementById('exercise-type').value;
+        const duration = parseFloat(document.getElementById('duration').value);
+        const caloriesBurned = parseFloat(document.getElementById('calories-burned').value);
+        const exerciseLog = document.getElementById('exercise-log');
+
+        if (duration > 0 && caloriesBurned > 0) {
+            // 更新總燃燒熱量
+            totalCalories += caloriesBurned;
+            document.getElementById('total-calories').textContent = `總共燃燒熱量: ${totalCalories} 大卡`;
+
+            // 添加到運動日誌
+            const listItem = document.createElement('li');
+            listItem.textContent = `${exerciseType} - 時間: ${duration} 分鐘，燃燒熱量: ${caloriesBurned} 大卡`;
+            exerciseLog.appendChild(listItem);
+
+            // 清空輸入框
+            document.getElementById('duration').value = '';
+            document.getElementById('calories-burned').value = '';
+        } else {
+            alert('請輸入有效的運動時長和燃燒熱量');
+        }
+    }
+</script>
+
+</body>
+</html>
+
